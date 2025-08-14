@@ -15,6 +15,110 @@
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Particle Container */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* Particle Animation */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(138, 43, 226, 0.8);
+            animation: float 6s infinite linear;
+            box-shadow: 0 0 8px rgba(138, 43, 226, 0.6);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        
+        .particle:nth-child(2n) {
+            background: rgba(147, 51, 234, 0.6);
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.4);
+            animation-duration: 8s;
+            width: 5px;
+            height: 5px;
+        }
+        
+        .particle:nth-child(3n) {
+            background: rgba(126, 34, 206, 0.7);
+            box-shadow: 0 0 6px rgba(126, 34, 206, 0.5);
+            animation-duration: 10s;
+            width: 7px;
+            height: 7px;
+        }
+        
+        .particle:nth-child(4n) {
+            background: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+            animation-duration: 7s;
+            width: 4px;
+            height: 4px;
+        }
+        
+        .particle:nth-child(5n) {
+            background: rgba(139, 69, 19, 0.0);
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.8), rgba(147, 51, 234, 0.6));
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.8);
+            animation-duration: 9s;
+            width: 8px;
+            height: 8px;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px) scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(1) rotate(36deg);
+            }
+            25% {
+                transform: translateY(75vh) translateX(-15px) scale(1.2) rotate(90deg);
+            }
+            50% {
+                transform: translateY(50vh) translateX(20px) scale(1) rotate(180deg);
+            }
+            75% {
+                transform: translateY(25vh) translateX(-10px) scale(1.1) rotate(270deg);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) translateX(5px) scale(0.8) rotate(324deg);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0px) scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Twinkling effect */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        .particle:nth-child(6n) {
+            animation: float 8s infinite linear, twinkle 2s infinite ease-in-out;
+        }
+        
+        .particle:nth-child(7n) {
+            animation: float 6s infinite linear, twinkle 1.5s infinite ease-in-out;
+        }
+        
+        /* Main Content */
+        .main-content {
+            position: relative;
+            z-index: 10;
         }
         
         .logo-container {
@@ -41,11 +145,28 @@
             transition: all 0.3s ease;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
         }
         
         .social-btn:hover {
             transform: translateY(-5px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .social-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(138, 43, 226, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .social-btn:hover::before {
+            left: 100%;
         }
         
         .instagram-btn {
@@ -86,7 +207,9 @@
     </style>
 </head>
 <body class="flex flex-col items-center justify-center p-4">
-    <div class="max-w-md w-full mx-auto text-center">
+    <div id="particles"></div>
+    
+    <div class="max-w-md w-full mx-auto text-center main-content">
         <div class="logo-container mb-8 pulse">
             <img src="logo.png" alt="USER404 Logo" class="logo">
         </div>
@@ -99,8 +222,6 @@
                 <span>Follow on Instagram</span>
             </button>
             
-
-
             <button onclick="openYoutube()" class="social-btn youtube-btn text-white py-3 px-6 flex items-center justify-center">
                 <i class="fab fa-youtube text-2xl mr-3"></i>
                 <span>Subscribe on YouTube</span>
@@ -131,6 +252,39 @@
     </div>
 
     <script>
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+
+            const size = Math.random() * 4 + 4;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            
+            particle.style.animationDelay = Math.random() * 3 + 's';
+            const duration = Math.random() * 4 + 6;
+            particle.style.animationDuration = duration + 's';
+            
+            document.getElementById('particles').appendChild(particle);
+            setTimeout(() => {
+                if (particle.parentNode) {
+                    particle.remove();
+                }
+            }, (duration + 3) * 1000);
+        }
+        function createParticleBurst() {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => createParticle(), i * 200);
+            }
+        }
+        
+        function startParticleSystem() {
+            createParticleBurst();
+            setTimeout(startParticleSystem, Math.random() * 800 + 400);
+        }
+        
+        window.addEventListener('load', startParticleSystem);
+        
         function openInstagram() {
             setTimeout(() => {
                 window.open('https://instagram.com/user404store.id', '_blank');
