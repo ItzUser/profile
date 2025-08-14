@@ -6,7 +6,7 @@
     <title>User404 Script</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         
         * {
             margin: 0;
@@ -14,34 +14,159 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-hover: rgba(255, 255, 255, 0.12);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --accent-pink: #ff6b9d;
+            --accent-blue: #4ecdc4;
+            --accent-purple: #a8e6cf;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-gradient);
             min-height: 100vh;
-            color: white;
+            color: var(--text-primary);
             overflow-x: hidden;
             position: relative;
         }
         
-        body::before {
-            content: '';
+        /* Animated Grid Background */
+        .grid-background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 119, 255, 0.2) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
+            opacity: 0.1;
+        }
+        
+        .grid-background::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+        
+        /* Interactive Grid Lines */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .grid-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: lineGlow 4s ease-in-out infinite;
+        }
+        
+        .grid-line.horizontal {
+            width: 100%;
+            height: 1px;
+        }
+        
+        .grid-line.vertical {
+            width: 1px;
+            height: 100%;
+        }
+        
+        @keyframes lineGlow {
+            0%, 100% {
+                opacity: 0.1;
+                transform: scaleX(0.5);
+            }
+            50% {
+                opacity: 0.6;
+                transform: scaleX(1);
+            }
+        }
+        
+        /* Floating Orbs */
+        .floating-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.2) 0%, transparent 70%);
+            animation: floatOrb 8s ease-in-out infinite;
+        }
+        
+        .orb:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: -5%;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.15) 0%, transparent 70%);
+            animation-delay: 0s;
+        }
+        
+        .orb:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: -5%;
+            background: radial-gradient(circle, rgba(255, 107, 157, 0.15) 0%, transparent 70%);
+            animation-delay: 2s;
+        }
+        
+        .orb:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            left: 20%;
+            background: radial-gradient(circle, rgba(168, 230, 207, 0.15) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+        
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
         }
         
         .container {
             text-align: center;
             padding: 2rem;
-            max-width: 500px;
+            max-width: 480px;
             width: 90%;
             margin: 0 auto;
             min-height: 100vh;
@@ -49,40 +174,65 @@
             flex-direction: column;
             justify-content: center;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
         
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 3rem 2rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
+        .main-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-radius: 28px;
+            border: 1px solid var(--glass-border);
+            padding: 3rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-            border-color: rgba(255, 255, 255, 0.3);
+        .main-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+        
+        .main-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: var(--glass-hover);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        
+        .logo-container {
+            position: relative;
+            margin-bottom: 2rem;
         }
         
         .logo {
-            width: 100px;
-            height: 100px;
-            border-radius: 22px;
-            margin: 0 auto 2rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.25);
+            width: 120px;
+            height: 120px;
+            border-radius: 26px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, 
+                rgba(255, 107, 157, 0.2) 0%,
+                rgba(78, 205, 196, 0.2) 50%,
+                rgba(168, 230, 207, 0.2) 100%);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -90,85 +240,136 @@
         .logo::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s ease;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue), var(--accent-purple), var(--accent-pink));
+            background-size: 400% 400%;
+            border-radius: 28px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+            animation: gradientShift 3s ease infinite;
         }
         
         .logo:hover::before {
-            left: 100%;
+            opacity: 1;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
         }
         
         .logo:hover {
-            transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
         
         .logo img {
-            width: 60px;
-            height: 60px;
-            border-radius: 14px;
-            transition: all 0.3s ease;
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            transition: all 0.4s ease;
+            z-index: 1;
+            position: relative;
         }
         
         .logo:hover img {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(-5deg);
+            filter: brightness(1.1);
+        }
+        
+        .title-section {
+            margin-bottom: 3rem;
         }
         
         .website-name {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ffffff, #e0e7ff);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--accent-pink) 50%, var(--accent-blue) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -0.5px;
+            letter-spacing: -1px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
         }
         
         .website-name:hover {
-            transform: scale(1.02);
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.5));
         }
         
         .subtitle {
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-bottom: 2.5rem;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
             font-weight: 400;
+            margin-bottom: 0.5rem;
         }
         
-        .social-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .status-indicator {
+            display: inline-flex;
             align-items: center;
+            gap: 0.5rem;
+            background: rgba(78, 205, 196, 0.1);
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            margin-top: 1rem;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.2);
+            }
+        }
+        
+        .social-grid {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
         }
         
         .social-link {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 18px 24px;
-            border-radius: 16px;
-            color: white;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 1.2rem 1.5rem;
+            border-radius: 18px;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
-            width: 100%;
-            max-width: 300px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
         
         .social-link::before {
@@ -179,7 +380,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
+            transition: left 0.6s ease;
         }
         
         .social-link:hover::before {
@@ -187,53 +388,70 @@
         }
         
         .social-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            background: var(--glass-hover);
+            transform: translateX(8px);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
         .social-icon {
-            margin-right: 16px;
-            font-size: 1.4rem;
-            width: 24px;
+            margin-right: 1rem;
+            font-size: 1.6rem;
+            width: 28px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
         
         .social-link:hover .social-icon {
-            transform: scale(1.1);
+            transform: scale(1.2) rotate(10deg);
+        }
+        
+        .social-link:nth-child(1) {
+            border-left: 3px solid var(--accent-pink);
         }
         
         .social-link:nth-child(1) .social-icon {
-            color: #E4405F;
+            color: var(--accent-pink);
+        }
+        
+        .social-link:nth-child(2) {
+            border-left: 3px solid #ff0050;
         }
         
         .social-link:nth-child(2) .social-icon {
             color: #ff0050;
         }
         
+        .social-link:nth-child(3) {
+            border-left: 3px solid var(--accent-blue);
+        }
+        
         .social-link:nth-child(3) .social-icon {
-            color: #5865F2;
+            color: var(--accent-blue);
+        }
+        
+        .cta-section {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
         }
         
         .cta-button {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 14px 32px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 16px;
             color: white;
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            margin-top: 2rem;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            display: inline-block;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.3);
         }
         
         .cta-button::before {
@@ -243,8 +461,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
         }
         
         .cta-button:hover::before {
@@ -252,62 +470,42 @@
         }
         
         .cta-button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
         }
         
-        .floating-shapes {
+        .secondary-button {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .secondary-button:hover {
+            background: var(--glass-hover);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        /* Interactive cursor effects */
+        .cursor-follower {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .shape {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .shape:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-        
-        .shape:nth-child(2) {
-            width: 60px;
-            height: 60px;
-            top: 20%;
-            right: 15%;
-            animation-delay: 2s;
-        }
-        
-        .shape:nth-child(3) {
-            width: 100px;
-            height: 100px;
-            bottom: 20%;
-            left: 5%;
-            animation-delay: 4s;
-        }
-        
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                opacity: 0.1;
-            }
-            50% {
-                transform: translateY(-20px) rotate(180deg);
-                opacity: 0.2;
-            }
+            background: radial-gradient(circle, var(--accent-pink), transparent);
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            opacity: 0;
         }
         
         @media (max-width: 768px) {
@@ -315,82 +513,179 @@
                 padding: 1rem;
             }
             
-            .glass-card {
+            .main-card {
                 padding: 2rem 1.5rem;
-                border-radius: 20px;
+                border-radius: 24px;
             }
             
             .website-name {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
             
-            .social-link {
-                padding: 16px 20px;
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .cta-section {
+                flex-direction: column;
             }
         }
         
         @media (max-width: 480px) {
             .website-name {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
             }
             
-            .glass-card {
+            .main-card {
                 padding: 1.5rem 1rem;
             }
             
             .social-link {
-                padding: 14px 18px;
-                font-size: 0.9rem;
+                padding: 1rem 1.2rem;
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="floating-shapes">
-        <div class="shape"></div>
-        <div class="shape"></div>
-        <div class="shape"></div>
+    <!-- Animated Grid Background -->
+    <div class="grid-background"></div>
+    
+    <!-- Interactive Grid Lines -->
+    <div class="grid-lines">
+        <div class="grid-line horizontal" style="top: 25%; animation-delay: 0s;"></div>
+        <div class="grid-line horizontal" style="top: 75%; animation-delay: 2s;"></div>
+        <div class="grid-line vertical" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="grid-line vertical" style="right: 20%; animation-delay: 3s;"></div>
     </div>
     
+    <!-- Floating Orbs -->
+    <div class="floating-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    
+    <!-- Cursor Follower -->
+    <div class="cursor-follower" id="cursorFollower"></div>
+    
     <div class="container">
-        <div class="glass-card">
-            <div class="logo" onclick="triggerRipple(this)">
-                <img src="logo.png" alt="User404 Logo">
+        <div class="main-card" id="mainCard">
+            <div class="logo-container">
+                <div class="logo" onclick="triggerLogoEffect(this)">
+                    <img src="logo.png" alt="User404 Logo">
+                </div>
             </div>
             
-            <h1 class="website-name" onclick="triggerRipple(this)">USER404 SCRIPT</h1>
-            <p class="subtitle">Join our exclusive community</p>
+            <div class="title-section">
+                <h1 class="website-name" onclick="triggerTitleEffect(this)">USER404 SCRIPT</h1>
+                <p class="subtitle">Premium Scripts & Tools</p>
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Online & Active</span>
+                </div>
+            </div>
             
-            <div class="social-links">
-                <a href="instagram://user?username=user404store.id" class="social-link" onclick="openInstagram(); triggerRipple(this);">
+            <div class="social-grid">
+                <a href="instagram://user?username=user404store.id" class="social-link" onclick="openInstagram(); triggerLinkEffect(this);" data-platform="instagram">
                     <i class="fab fa-instagram social-icon"></i>
-                    @user404store.id
+                    <span>@user404store.id</span>
                 </a>
-                <a href="tiktok://user?username=uservonzy" class="social-link" onclick="openTikTok(); triggerRipple(this);">
+                <a href="tiktok://user?username=uservonzy" class="social-link" onclick="openTikTok(); triggerLinkEffect(this);" data-platform="tiktok">
                     <i class="fab fa-tiktok social-icon"></i>
-                    Follow on TikTok
+                    <span>Follow on TikTok</span>
                 </a>
-                <a href="discord://invite/DKKeTpGVNx" class="social-link" onclick="openDiscord(); triggerRipple(this);">
+                <a href="discord://invite/DKKeTpGVNx" class="social-link" onclick="openDiscord(); triggerLinkEffect(this);" data-platform="discord">
                     <i class="fab fa-discord social-icon"></i>
-                    Discord Community
+                    <span>Discord Community</span>
                 </a>
             </div>
             
-            <a href="#explore" class="cta-button" onclick="triggerRipple(this)">
-                Explore More
-            </a>
+            <div class="cta-section">
+                <a href="#explore" class="cta-button" onclick="triggerButtonEffect(this)">
+                    <i class="fas fa-rocket" style="margin-right: 0.5rem;"></i>
+                    Explore Now
+                </a>
+                <a href="#contact" class="secondary-button" onclick="triggerButtonEffect(this)">
+                    <i class="fas fa-envelope" style="margin-right: 0.5rem;"></i>
+                    Contact
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        function triggerRipple(element) {
-            // Simple scale animation instead of complex effects
-            element.style.transform = 'scale(0.95)';
+        // Cursor follower effect
+        const cursorFollower = document.getElementById('cursorFollower');
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorFollower.style.opacity = '0.6';
+        });
+        
+        document.addEventListener('mouseleave', () => {
+            cursorFollower.style.opacity = '0';
+        });
+        
+        function animateCursor() {
+            followerX += (mouseX - followerX) * 0.1;
+            followerY += (mouseY - followerY) * 0.1;
+            
+            cursorFollower.style.transform = `translate(${followerX - 10}px, ${followerY - 10}px)`;
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+        
+        // Interactive effects
+        function triggerLogoEffect(element) {
+            element.style.transform = 'scale(0.9) rotate(10deg)';
+            element.style.filter = 'hue-rotate(180deg)';
+            
             setTimeout(() => {
                 element.style.transform = '';
-            }, 150);
+                element.style.filter = '';
+            }, 300);
         }
         
+        function triggerTitleEffect(element) {
+            element.style.transform = 'scale(1.1)';
+            element.style.filter = 'drop-shadow(0 0 30px rgba(255, 107, 157, 0.8))';
+            
+            setTimeout(() => {
+                element.style.transform = '';
+                element.style.filter = '';
+            }, 400);
+        }
+        
+        function triggerLinkEffect(element) {
+            const platform = element.dataset.platform;
+            let color = '#ff6b9d';
+            
+            if (platform === 'tiktok') color = '#ff0050';
+            if (platform === 'discord') color = '#4ecdc4';
+            
+            element.style.boxShadow = `0 0 30px ${color}40, inset 0 0 30px ${color}20`;
+            element.style.transform = 'translateX(15px) scale(1.02)';
+            
+            setTimeout(() => {
+                element.style.boxShadow = '';
+                element.style.transform = '';
+            }, 300);
+        }
+        
+        function triggerButtonEffect(element) {
+            element.style.transform = 'translateY(-5px) scale(0.95)';
+            
+            setTimeout(() => {
+                element.style.transform = '';
+            }, 200);
+        }
+        
+        // Link handlers
         function openInstagram() {
             setTimeout(() => {
                 window.open('https://instagram.com/user404store.id', '_blank');
@@ -408,8 +703,41 @@
                 window.open('https://discord.gg/kYNMUvDqSx', '_blank');
             }, 200);
         }
-
-        // Simple click ripple effect
+        
+        // Interactive grid effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const gridLines = document.querySelectorAll('.grid-line');
+            const mouseXPercent = (e.clientX / window.innerWidth) * 100;
+            const mouseYPercent = (e.clientY / window.innerHeight) * 100;
+            
+            gridLines.forEach((line, index) => {
+                const intensity = Math.sin(Date.now() * 0.001 + index) * 0.3 + 0.7;
+                line.style.opacity = intensity * 0.4;
+            });
+        });
+        
+        // Main card tilt effect
+        const mainCard = document.getElementById('mainCard');
+        
+        mainCard.addEventListener('mousemove', (e) => {
+            const rect = mainCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            mainCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+        });
+        
+        mainCard.addEventListener('mouseleave', () => {
+            mainCard.style.transform = '';
+        });
+        
+        // Ripple effect on click
         document.addEventListener('click', (e) => {
             const ripple = document.createElement('div');
             ripple.style.position = 'fixed';
@@ -417,32 +745,42 @@
             ripple.style.top = e.clientY + 'px';
             ripple.style.width = '4px';
             ripple.style.height = '4px';
-            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+            ripple.style.background = 'rgba(255, 107, 157, 0.8)';
             ripple.style.borderRadius = '50%';
             ripple.style.pointerEvents = 'none';
             ripple.style.transform = 'translate(-50%, -50%)';
-            ripple.style.animation = 'ripple 0.6s ease-out forwards';
-            ripple.style.zIndex = '9999';
+            ripple.style.animation = 'rippleEffect 0.8s ease-out forwards';
+            ripple.style.zIndex = '10000';
             
             document.body.appendChild(ripple);
             
             setTimeout(() => {
                 ripple.remove();
-            }, 600);
+            }, 800);
         });
         
         // Add ripple animation
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes ripple {
+            @keyframes rippleEffect {
                 to {
-                    width: 50px;
-                    height: 50px;
+                    width: 80px;
+                    height: 80px;
                     opacity: 0;
                 }
             }
         `;
         document.head.appendChild(style);
+        
+        // Random grid line animations
+        setInterval(() => {
+            const gridLines = document.querySelectorAll('.grid-line');
+            const randomLine = gridLines[Math.floor(Math.random() * gridLines.length)];
+            randomLine.style.animation = 'none';
+            setTimeout(() => {
+                randomLine.style.animation = 'lineGlow 4s ease-in-out infinite';
+            }, 50);
+        }, 3000);
     </script>
 </body>
 </html>
