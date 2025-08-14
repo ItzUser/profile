@@ -7,516 +7,159 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         body {
             font-family: 'Poppins', sans-serif;
-            background: radial-gradient(ellipse at center, #1a0b2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #7209b7 100%);
+            background: linear-gradient(135deg, #000000 0%, #2a044a 100%);
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
         }
         
-        /* Animated Purple Clouds */
-        .clouds {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .cloud {
-            position: absolute;
-            background: radial-gradient(ellipse, rgba(138, 43, 226, 0.3) 0%, rgba(75, 0, 130, 0.2) 50%, transparent 100%);
-            border-radius: 50px;
-            opacity: 0.6;
-            animation: float 20s infinite ease-in-out;
-        }
-        
-        .cloud:nth-child(1) {
-            width: 200px;
-            height: 60px;
-            top: 10%;
-            left: -100px;
-            animation-delay: 0s;
-            animation-duration: 25s;
-        }
-        
-        .cloud:nth-child(2) {
-            width: 150px;
-            height: 80px;
-            top: 30%;
-            left: -120px;
-            animation-delay: 5s;
-            animation-duration: 30s;
-        }
-        
-        .cloud:nth-child(3) {
-            width: 300px;
-            height: 100px;
-            top: 60%;
-            left: -150px;
-            animation-delay: 10s;
-            animation-duration: 35s;
-        }
-        
-        .cloud:nth-child(4) {
-            width: 180px;
-            height: 70px;
-            top: 80%;
-            left: -90px;
-            animation-delay: 15s;
-            animation-duration: 28s;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateX(-200px) translateY(0px);
-            }
-            33% {
-                transform: translateX(calc(100vw + 100px)) translateY(-20px);
-            }
-            66% {
-                transform: translateX(calc(100vw + 150px)) translateY(10px);
-            }
-            100% {
-                transform: translateX(-200px) translateY(0px);
-            }
-        }
-        
-        /* Particle Animation */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: linear-gradient(45deg, #8a2be2, #9932cc);
-            border-radius: 50%;
-            animation: particle-float 15s infinite linear;
-        }
-        
-        @keyframes particle-float {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100px) translateX(100px);
-                opacity: 0;
-            }
-        }
-        
-        /* Main Container */
-        .main-container {
-            position: relative;
-            z-index: 10;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 30px;
-            border: 1px solid rgba(138, 43, 226, 0.3);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-            padding: 2rem;
-            margin: 2rem auto;
-            max-width: 500px;
-            animation: containerGlow 4s ease-in-out infinite alternate;
-        }
-        
-        @keyframes containerGlow {
-            0% {
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(138, 43, 226, 0.1);
-            }
-            100% {
-                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 50px rgba(138, 43, 226, 0.3);
-            }
-        }
-        
-        /* Logo Animation */
         .logo-container {
             position: relative;
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 2rem auto;
-            perspective: 1000px;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
         }
         
         .logo {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 25px;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-style: preserve-3d;
-            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
         }
         
         .logo:hover {
-            transform: rotateY(360deg) scale(1.1);
-            filter: drop-shadow(0 0 30px rgba(138, 43, 226, 0.8));
+            transform: scale(1.05) rotate(2deg);
         }
         
-        /* Title Animation */
-        .title {
-            font-family: 'Orbitron', monospace;
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(45deg, #8a2be2, #9932cc, #4b0082, #8a2be2);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientShift 3s ease-in-out infinite;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-            animation: fadeInUp 1s ease-out 0.5s both;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Social Buttons */
         .social-btn {
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 20px;
-            border: 2px solid transparent;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            cursor: pointer;
-            margin-bottom: 1rem;
-        }
-        
-        .social-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.6s;
-        }
-        
-        .social-btn:hover::before {
-            left: 100%;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         
         .social-btn:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(138, 43, 226, 0.4);
-            border-color: rgba(138, 43, 226, 0.6);
-        }
-        
-        .social-btn:active {
-            transform: translateY(-4px) scale(0.98);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
         .instagram-btn {
-            background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 25%, #fcb045 50%, #833ab4 100%);
-            background-size: 200% 200%;
-            animation: gradientFlow 4s ease infinite;
+            background: linear-gradient(45deg, #000000, #4b0082);
         }
         
         .tiktok-btn {
-            background: linear-gradient(135deg, #000000 0%, #ff0050 25%, #00f2ea 50%, #000000 100%);
-            background-size: 200% 200%;
-            animation: gradientFlow 4s ease infinite 1s;
+            background: linear-gradient(45deg, #000000, #8a2be2);
         }
 
         .youtube-btn {
-            background: linear-gradient(135deg, #ff0000 0%, #cc0000 25%, #990000 50%, #ff0000 100%);
-            background-size: 200% 200%;
-            animation: gradientFlow 4s ease infinite 2s;
+            background: linear-gradient(45deg, #000000, #8a2be2);
         }
         
         .discord-btn {
-            background: linear-gradient(135deg, #7289da 0%, #5865f2 25%, #4752c4 50%, #7289da 100%);
-            background-size: 200% 200%;
-            animation: gradientFlow 4s ease infinite 3s;
+            background: linear-gradient(45deg, #000000, #9932cc);
         }
         
-        @keyframes gradientFlow {
-            0%, 100% {
-                background-position: 0% 50%;
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
             }
-            50% {
-                background-position: 100% 50%;
+            70% {
+                box-shadow: 0 0 0 15px rgba(255, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
             }
         }
         
-        .section-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin: 2rem 0 1.5rem 0;
-            background: linear-gradient(45deg, #8a2be2, #ffffff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 3rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-        
-        /* Mobile Responsiveness */
-        @media (max-width: 640px) {
-            .title {
-                font-size: 2.5rem;
-            }
-            
-            .main-container {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-            
-            .logo-container {
-                width: 150px;
-                height: 150px;
-            }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center p-4 min-h-screen">
-    <!-- Animated Background Clouds -->
-    <div class="clouds">
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-        <div class="cloud"></div>
-    </div>
-    
-    <!-- Floating Particles -->
-    <div class="particles" id="particles"></div>
-    
-    <div class="main-container">
-        <!-- Logo -->
-        <div class="logo-container">
-            <img src="logo.png" alt="USER404 Logo" class="logo" onclick="logoClick()">
+<body class="flex flex-col items-center justify-center p-4">
+    <div class="max-w-md w-full mx-auto text-center">
+        <div class="logo-container mb-8 pulse">
+            <img src="logo.png" alt="USER404 Logo" class="logo">
         </div>
         
-        <!-- Title -->
-        <h1 class="title">USER404</h1>
-        <p class="subtitle">Join our growing community ✨</p>
-        
-        <!-- Social Buttons -->
-        <div class="space-y-4">
-            <button onclick="openInstagram()" class="social-btn instagram-btn w-full text-white py-4 px-6 flex items-center justify-center text-lg font-medium">
-                <i class="fab fa-instagram text-2xl mr-4"></i>
+        <h1 class="text-3xl font-bold mb-2 glow-text">USER404</h1>
+        <p class="text-gray-300 mb-8">Join our growing community</p>
+        <div class="grid grid-cols-1 gap-4 mb-8">
+            <button onclick="openInstagram()" class="social-btn instagram-btn text-white py-3 px-6 flex items-center justify-center">
+                <i class="fab fa-instagram text-2xl mr-3"></i>
                 <span>Follow on Instagram</span>
-                <i class="fas fa-external-link-alt ml-auto text-sm opacity-70"></i>
             </button>
             
-            <button onclick="openYoutube()" class="social-btn youtube-btn w-full text-white py-4 px-6 flex items-center justify-center text-lg font-medium">
-                <i class="fab fa-youtube text-2xl mr-4"></i>
+
+
+            <button onclick="openYoutube()" class="social-btn youtube-btn text-white py-3 px-6 flex items-center justify-center">
+                <i class="fab fa-youtube text-2xl mr-3"></i>
                 <span>Subscribe on YouTube</span>
-                <i class="fas fa-external-link-alt ml-auto text-sm opacity-70"></i>
             </button>
 
-            <button onclick="openTikTok()" class="social-btn tiktok-btn w-full text-white py-4 px-6 flex items-center justify-center text-lg font-medium">
-                <i class="fab fa-tiktok text-2xl mr-4"></i>
+            <button onclick="openTikTok()" class="social-btn tiktok-btn text-white py-3 px-6 flex items-center justify-center">
+                <i class="fab fa-tiktok text-2xl mr-3"></i>
                 <span>Follow on TikTok</span>
-                <i class="fas fa-external-link-alt ml-auto text-sm opacity-70"></i>
             </button>
         </div>
         
-        <!-- Discord Communities -->
-        <h2 class="section-title">Discord Communities</h2>
-        <div class="space-y-4">
-            <button onclick="openDiscordRGT()" class="social-btn discord-btn w-full text-white py-4 px-6 flex items-center justify-center text-lg font-medium">
-                <i class="fab fa-discord text-2xl mr-4"></i>
+        <h2 class="text-xl font-semibold mb-4 glow-text">Discord Communities</h2>
+        <div class="grid grid-cols-1 gap-4">
+            <button onclick="openDiscordRGT()" class="social-btn discord-btn text-white py-3 px-6 flex items-center justify-center">
+                <i class="fab fa-discord text-2xl mr-3"></i>
                 <span>RGT Discord Community</span>
-                <i class="fas fa-external-link-alt ml-auto text-sm opacity-70"></i>
             </button>
             
-            <button onclick="openDiscordGTPS()" class="social-btn discord-btn w-full text-white py-4 px-6 flex items-center justify-center text-lg font-medium">
-                <i class="fab fa-discord text-2xl mr-4"></i>
+            <button onclick="openDiscordGTPS()" class="social-btn discord-btn text-white py-3 px-6 flex items-center justify-center">
+                <i class="fab fa-discord text-2xl mr-3"></i>
                 <span>GTPS Discord Community</span>
-                <i class="fas fa-external-link-alt ml-auto text-sm opacity-70"></i>
             </button>
         </div>
         
-        <!-- Footer -->
-        <div class="footer">
+        <div class="mt-12 text-gray-400 text-sm">
             <p>© 2025 USER404. All rights reserved.</p>
-            <p class="text-xs mt-2 opacity-60">Made with 💜 for the community</p>
         </div>
     </div>
 
     <script>
-        // Create floating particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            const particleCount = 20;
-            
-            for (let i = 0; i < particleCount; i++) {
-                setTimeout(() => {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * window.innerWidth + 'px';
-                    particle.style.animationDelay = Math.random() * 15 + 's';
-                    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-                    particlesContainer.appendChild(particle);
-                    
-                    // Remove particle after animation
-                    setTimeout(() => {
-                        if (particle.parentNode) {
-                            particle.parentNode.removeChild(particle);
-                        }
-                    }, 25000);
-                }, i * 1000);
-            }
-        }
-        
-        // Logo click animation
-        function logoClick() {
-            const logo = document.querySelector('.logo');
-            logo.style.transform = 'rotateY(720deg) scale(1.2)';
-            logo.style.filter = 'drop-shadow(0 0 50px rgba(138, 43, 226, 1)) hue-rotate(90deg)';
-            
-            setTimeout(() => {
-                logo.style.transform = '';
-                logo.style.filter = '';
-            }, 800);
-        }
-        
-        // Social media functions with enhanced feedback
         function openInstagram() {
-            showClickFeedback();
             setTimeout(() => {
                 window.open('https://instagram.com/user404store.id', '_blank');
-            }, 300);
+            }, 200);
         }
         
         function openTikTok() {
-            showClickFeedback();
             setTimeout(() => {
                 window.open('https://tiktok.com/@uservonzy', '_blank');
-            }, 300);
+            }, 200);
         }
         
         function openYoutube() {
-            showClickFeedback();
             setTimeout(() => {
                 window.open('https://www.youtube.com/@user404growtopia6', '_blank');
-            }, 300);
+            }, 200);
         }
 
         function openDiscordRGT() {
-            showClickFeedback();
             setTimeout(() => {
                 window.open('https://discord.gg/kYNMUvDqSx', '_blank');
-            }, 300);
+            }, 200);
         }
         
         function openDiscordGTPS() {
-            showClickFeedback();
             setTimeout(() => {
                 window.open('https://discord.gg/rgDtmrNZgQ', '_blank');
-            }, 300);
+            }, 200);
         }
-        
-        function showClickFeedback() {
-            // Create ripple effect
-            const ripple = document.createElement('div');
-            ripple.style.position = 'fixed';
-            ripple.style.width = '20px';
-            ripple.style.height = '20px';
-            ripple.style.borderRadius = '50%';
-            ripple.style.background = 'rgba(138, 43, 226, 0.6)';
-            ripple.style.transform = 'scale(0)';
-            ripple.style.animation = 'ripple 0.6s linear';
-            ripple.style.pointerEvents = 'none';
-            ripple.style.zIndex = '1000';
-            
-            document.body.appendChild(ripple);
-            
-            setTimeout(() => {
-                document.body.removeChild(ripple);
-            }, 600);
-        }
-        
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Initialize particles
-        createParticles();
-        
-        // Recreate particles periodically
-        setInterval(createParticles, 20000);
-        
-        // Add entrance animation to buttons
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.social-btn');
-            buttons.forEach((button, index) => {
-                button.style.opacity = '0';
-                button.style.transform = 'translateY(50px)';
-                button.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1 + 0.5}s both`;
-            });
-        });
     </script>
 </body>
 </html>
